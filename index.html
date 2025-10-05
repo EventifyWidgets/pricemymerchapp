@@ -191,9 +191,11 @@
       </div>
     </section>
     <section class="cta">
-      <p><strong>Price My Merch</strong> is coming soon to the App Store. Sign up to be notified when it launches!</p>
-      <!-- Placeholder button; update with actual link when available -->
-      <button disabled>Notify Me</button>
+      <p><strong>Price My Merch</strong> is coming soon to the App Store. Sign up to be notified when it launches and receive future updates!</p>
+      <!-- Button scrolls to the Klaviyo form below -->
+      <button type="button" onclick="document.querySelector('.klaviyo-form-RRcnDK').scrollIntoView({ behavior: 'smooth' });">Notify Me</button>
+      <!-- Klaviyo signup form container (embedded form) -->
+      <div class="klaviyo-form-RRcnDK" id="signup"></div>
     </section>
   </div>
   <footer>
@@ -204,5 +206,41 @@
     </nav>
     <p>&copy; 2025 Price My Merch</p>
   </footer>
-</body>
+    <!-- Klaviyo onsite tracking and initialization -->
+    <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/TKywCj/klaviyo.js?company_id=TKywCj"></script>
+    <script type="text/javascript">
+      // Initialize Klaviyo object on page load
+      !function(){
+        if(!window.klaviyo){
+          window._klOnsite = window._klOnsite || [];
+          try {
+            window.klaviyo = new Proxy({}, {
+              get: function(target, key){
+                return key === 'push' ? function(){
+                  var args;
+                  (args = window._klOnsite).push.apply(args, arguments);
+                } : function(){
+                  for(var n = arguments.length, argsArray = new Array(n), i = 0; i < n; i++) argsArray[i] = arguments[i];
+                  var callback = typeof argsArray[argsArray.length - 1] === 'function' ? argsArray.pop() : undefined;
+                  var promise = new Promise(function(resolve){
+                    window._klOnsite.push([key].concat(argsArray, [function(result){
+                      if (callback) callback(result);
+                      resolve(result);
+                    }]));
+                  });
+                  return promise;
+                };
+              }
+            });
+          } catch (e) {
+            window.klaviyo = window.klaviyo || [];
+            window.klaviyo.push = function(){
+              var args;
+              (args = window._klOnsite).push.apply(args, arguments);
+            };
+          }
+        }
+      }();
+    </script>
+  </body>
 </html>
